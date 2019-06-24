@@ -27,6 +27,7 @@ document.getElementById("board").addEventListener("click", function(event) {
     // if its in progress
     console.log('event.target.innerHTML: ', event.target.innerHTML);
     if (turns < 9) {
+        console.log(turns);
         // event.target is clicked element
         // conditional based on if it is clicked on table cell (td) or within table cell on an already-created mark ("B" for bold)
         if (event.target && (event.target.nodeName === "TD" ||  event.target.nodeName === "B")) {
@@ -48,6 +49,12 @@ document.getElementById("board").addEventListener("click", function(event) {
                 switchPlayers();
             }
         }
+        // conditional to check if anyone won after enough turns
+        console.log("TURN: ", turns);
+        if (turns >= 5) {
+            console.log("TURN: ", turns);
+            resultOfGame();
+        }
     } else { // if its over
         resultOfGame();
     }
@@ -62,11 +69,15 @@ let tie = false;
 let resultOfGame = function() {
     // create variable which adds up instances of X in row, column, and diagonal row
     let instanceOfX = 0;
+
     // create variable which adds up instances of O in row, column, and diagonal row
     let instanceOfO = 0;
+
     // create variables which adds up win in each row, column, and diagonal row to make sure no ties
-    let instanceOfXWin = 0;
-    let instanceOfOWin = 0;
+    // NO! BAD! NOT TIC TAC TOE RULES! FOOL!
+    // let instanceOfXWin = 0;
+    // let instanceOfOWin = 0;
+
     // inspect by row
     // iterate through each row
     for(let i = 1; i < 9; i+=3) {
@@ -87,11 +98,9 @@ let resultOfGame = function() {
         console.log("WINNER CHECK in row: ", i);
         if(instanceOfX === 3) { // if X wins
             winner = 'X';
-            instanceOfXWin++;
         }
         if(instanceOfO === 3) { // if O wins
             winner = 'O';
-            instanceOfOWin++;
         }
         // clear results of counts after iterating through entire row
         instanceOfX = 0;
@@ -133,23 +142,25 @@ let resultOfGame = function() {
 
 
 
-    // check for winner tie
-    if(instanceOfXWin > 0 && instanceOfOWin > 0){
-        winner = '';
-        tie = true;
-        console.log("We got a tie!");
-    }
+    // check for winner tie // NEVERMIND THATS NOT THE RULES!
+    // if(instanceOfXWin > 0 && instanceOfOWin > 0){
+    //     winner = '';
+    //     tie = true;
+    //     console.log("We got a tie!");
+    // }
 
     // set conditional to return in case of winner or tie
     if (winner.length > 0) {
         document.getElementById("result").innerHTML = `<b>${winner} WINS!</b>`;
         document.getElementById(event.target.id).style.textAlign = "center";
-    } else if (tie === true) { // in case of tie win
-        document.getElementById("result").innerHTML = '<b>TIE! WE ALL WIN!</b>';
-        document.getElementById(event.target.id).style.textAlign = "center";
-    } else { // in case of tie lose
-        document.getElementById("result").innerHTML = '<b>TIE! WE ALL LOSE! BOO!!</b>';
-        document.getElementById(event.target.id).style.textAlign = "center";
-
+    // THIS ISNT HOW TIC TAC TOE WORKS!! NO TIE WINS!
+    // } else if (tie === true) { // in case of tie win
+    //     document.getElementById("result").innerHTML = '<b>TIE! WE ALL WIN!</b>';
+    //     document.getElementById(event.target.id).style.textAlign = "center";
+    } else { // in case of no win
+        if (turns === 9) { // only check for tie if all slots taken
+            document.getElementById("result").innerHTML = '<b>TIE! WE ALL LOSE! BOO!!</b>';
+            document.getElementById(event.target.id).style.textAlign = "center";
+        }
     }
 }
