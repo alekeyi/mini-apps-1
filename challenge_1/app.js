@@ -1,8 +1,12 @@
 console.log("Is app.js loading into HTML???");
 
 // set a variable to be toggled in order to determine whose turn it is
+// NEVERMIND // set the variable to be random on page load
+// NEVERMIND // let playerMark = Math.random() >= 0.5;
 let playerMark = true;
 // set a starting mark, which can be toggled between X and O
+// NEVERMIND // set the mark according to which random playerMark was chosen
+// NEVERMIND // let mark = playerMark ? 'X' : 'O';
 let mark = 'X';
 
 // write a function to keep track of what mark to use
@@ -21,6 +25,7 @@ let turns = 0;
 document.getElementById("board").addEventListener("click", function(event) {
     // set conditional to check if game is in progress, or over
     // if its in progress
+    console.log('event.target.innerHTML: ', event.target.innerHTML);
     if (turns < 9) {
         // event.target is clicked element
         // conditional based on if it is clicked on table cell (td) or within table cell on an already-created mark ("B" for bold)
@@ -50,22 +55,101 @@ document.getElementById("board").addEventListener("click", function(event) {
 
 // create variable to display winner
 let winner = '';
+// create variable for the status of a winner tie;
+let tie = false;
 
 // write function to determine whether game won or tied, and result
 let resultOfGame = function() {
+    // create variable which adds up instances of X in row, column, and diagonal row
+    let instanceOfX = 0;
+    // create variable which adds up instances of O in row, column, and diagonal row
+    let instanceOfO = 0;
+    // create variables which adds up win in each row, column, and diagonal row to make sure no ties
+    let instanceOfXWin = 0;
+    let instanceOfOWin = 0;
     // inspect by row
-
+    // iterate through each row
+    for(let i = 1; i < 9; i+=3) {
+        // iterate down each row
+        for(let j = i; j < i + 3; j++){
+            // add up instances of X along row iteration
+            console.log('i row: ', i);
+            console.log('j column: ', j);
+            if(document.getElementById(`square-${j}`).innerHTML.indexOf('X') > -1) {
+                instanceOfX++;
+            } else if(document.getElementById(`square-${j}`).innerHTML.indexOf('O') > -1) { 
+            // add up instances of O along row iteration
+                instanceOfO++;
+            }
+            console.log("   o: ", instanceOfO, "x: ", instanceOfX)
+        }
+        // determine if there was a winner in iterated row
+        console.log("WINNER CHECK in row: ", i);
+        if(instanceOfX === 3) { // if X wins
+            winner = 'X';
+            instanceOfXWin++;
+        }
+        if(instanceOfO === 3) { // if O wins
+            winner = 'O';
+            instanceOfOWin++;
+        }
+        // clear results of counts after iterating through entire row
+        instanceOfX = 0;
+        instanceOfO = 0;
+    }
+    
     // inspect by column
+    // iterate through each column, if there isn't already a winner
+    if(winner.length === 0 && tie === false) {
+        for(let i = 1; i < 3; i++) {
+            // iterate down each column
+            for(let j = i; j < 3; j++) {
+                // add up instances of X along column iteration
+                console.log('i column: ', i);
+                console.log('j row: ', j);
+                if(document.getElementById(`square-${i}`).innerHTML.indexOf('X') > -1) {
+                    instanceOfX++;
+                } else if(document.getElementById(`square-${i}`).innerHTML.indexOf('O') > -1) {
+                // add up instances of O along column iteration
+                    instanceOfO++;
+                }
+                console.log("   o: ", instanceOfO, "x: ", instanceOfX)
+            }
+            // determine if there was a winner in iterated column
+            if(instanceOfX === 3 && instanceOfO < 3) { // if X wins and no tie
+                winner = 'X';
+            }else if(instanceOfO === 3 && instanceOfX < 3) { // if O wins and no tie
+                winner = 'O';
+            }
+            // clear results of counts after iterating through entire column
+            instanceOfX = 0;
+            instanceOfO = 0;
+        }
+    }
 
     // inspect by diagonal
     // by major diagonal 
     // by minor diagonal
-    // set conditional to return in case of winner
+
+
+
+    // check for winner tie
+    if(instanceOfXWin > 0 && instanceOfOWin > 0){
+        winner = '';
+        tie = true;
+        console.log("We got a tie!");
+    }
+
+    // set conditional to return in case of winner or tie
     if (winner.length > 0) {
         document.getElementById("result").innerHTML = `<b>${winner} WINS!</b>`;
         document.getElementById(event.target.id).style.textAlign = "center";
-    } else { // in case of tie
-        document.getElementById("result").innerHTML = `<b>TIE! WE ALL WIN!</b>`;
+    } else if (tie === true) { // in case of tie win
+        document.getElementById("result").innerHTML = '<b>TIE! WE ALL WIN!</b>';
         document.getElementById(event.target.id).style.textAlign = "center";
+    } else { // in case of tie lose
+        document.getElementById("result").innerHTML = '<b>TIE! WE ALL LOSE! BOO!!</b>';
+        document.getElementById(event.target.id).style.textAlign = "center";
+
     }
 }
