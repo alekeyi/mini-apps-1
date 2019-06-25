@@ -21,20 +21,27 @@ let switchPlayers = function() {
 // set a variable which counts turns to know when game is over at 9 turns
 let turns = 0;
 
+// init. diagonal checker since line 51 resets regular checker prematurely
+let instanceOfXDiag = 0;
+let instanceOfODiag = 0;
+// init. checker on whether cell was already counted, because line 51 resets iterator each time
+let checkedDiag = 0;
+let xOrO = 1;
+
 // event listener for clicks tied to the board
 document.getElementById("board").addEventListener("click", function(event) {
     // set conditional to check if game is in progress, or over
     // if its in progress
-    console.log('event.target.innerHTML: ', event.target.innerHTML);
-    if (turns < 9) {
-        console.log(turns);
+    // console.log('event.target.innerHTML: ', event.target.innerHTML);
+    if (turns < 9 && winner.length === 0) {
+        console.log("turn on click: ", turns);
         // event.target is clicked element
         // conditional based on if it is clicked on table cell (td) or within table cell on an already-created mark ("B" for bold)
         if (event.target && (event.target.nodeName === "TD" ||  event.target.nodeName === "B")) {
             // event.target.id is id of clicked element
-            console.log('event.target.nodeName: ', event.target.nodeName);
-            console.log(event.target.id, " was clicked ");
-            console.log('length of target innerHTML: ', document.getElementById(event.target.id).innerHTML.length);
+            // console.log('event.target.nodeName: ', event.target.nodeName);
+            // console.log(event.target.id, " was clicked ");
+            // console.log('length of target innerHTML: ', document.getElementById(event.target.id).innerHTML.length);
             // conditional which makes sure the cell is empty before placing mark and setting next turn
             if (document.getElementById(event.target.id).innerHTML.length === 0) {
                 // place mark
@@ -42,7 +49,7 @@ document.getElementById("board").addEventListener("click", function(event) {
                 document.getElementById(event.target.id).style.textAlign = "center";
                 // add one to turn
                 turns++;
-                console.log("turn: ", turns);
+                // console.log("turn: ", turns);
                 // switch turns
                 playerMark = !playerMark;
                 console.log("playerMark flipped!");
@@ -50,9 +57,9 @@ document.getElementById("board").addEventListener("click", function(event) {
             }
         }
         // conditional to check if anyone won after enough turns
-        console.log("TURN: ", turns);
-        if (turns >= 5) {
-            console.log("TURN: ", turns);
+        // console.log("TURN: ", turns);
+        if (turns > 3) {
+            // console.log("TURN: ", turns);
             resultOfGame();
         }
     } else { // if its over
@@ -84,18 +91,18 @@ let resultOfGame = function() {
         // iterate down each row
         for(let j = i; j < i + 3; j++){
             // add up instances of X along row iteration
-            console.log('i row: ', i);
-            console.log('j column: ', j);
+            // console.log('i row: ', i);
+            // console.log('j column: ', j);
             if(document.getElementById(`square-${j}`).innerHTML.indexOf('X') > -1) {
                 instanceOfX++;
             } else if(document.getElementById(`square-${j}`).innerHTML.indexOf('O') > -1) { 
             // add up instances of O along row iteration
                 instanceOfO++;
             }
-            console.log("   o: ", instanceOfO, "x: ", instanceOfX)
+            // console.log("   o: ", instanceOfO, "x: ", instanceOfX)
         }
         // determine if there was a winner in iterated row
-        console.log("WINNER CHECK in row: ", i);
+        // console.log("WINNER CHECK in row: ", i);
         if(instanceOfX === 3) { // if X wins
             winner = 'X';
         }
@@ -114,15 +121,15 @@ let resultOfGame = function() {
             // iterate down each column
             for(let j = i; j < 3; j++) {
                 // add up instances of X along column iteration
-                console.log('i column: ', i);
-                console.log('j row: ', j);
+                // console.log('i column: ', i);
+                // console.log('j row: ', j);
                 if(document.getElementById(`square-${i}`).innerHTML.indexOf('X') > -1) {
                     instanceOfX++;
                 } else if(document.getElementById(`square-${i}`).innerHTML.indexOf('O') > -1) {
                 // add up instances of O along column iteration
                     instanceOfO++;
                 }
-                console.log("   o: ", instanceOfO, "x: ", instanceOfX)
+                // console.log("   o: ", instanceOfO, "x: ", instanceOfX);
             }
             // determine if there was a winner in iterated column
             if(instanceOfX === 3 && instanceOfO < 3) { // if X wins and no tie
@@ -138,6 +145,48 @@ let resultOfGame = function() {
 
     // inspect by diagonal
     // by major diagonal 
+    if(winner.length === 0) {
+        console.log('Checking major diagonal...');
+        // iterate through columns
+        for(let i = 1 + checkedDiag; i < 4; i++) {
+            console.log("FIRST ITERATION RESET");
+            // iterate cells row, each row one further right, matching column number
+            console.log("XORO: ", xOrO);
+            for(let j = i; j <= i; j++){
+                console.log("SECOND ITERATION RESET");
+                // add up instances of X
+                console.log("COLUMN: ", i, "\nROW: ", j, "\nin turn: ", turns);
+                if(document.getElementById(`square-${xOrO}`).innerHTML.indexOf('X') > -1) {
+                    console.log("instanceOfXDiag++++++++++++++++++++");
+                    instanceOfXDiag++;
+                    // checkedDiag++;
+                } else if(document.getElementById(`square-${xOrO}`).innerHTML.indexOf('O') > -1) {
+                // add up instances of O along column iteration
+                    console.log("instanceOfODiag++++++++++++++++++++");
+                    instanceOfODiag++;
+                    // checkedDiag++;
+                }
+                // keep track of iteration (checkedDiag) and which square we're looking at (xOrO)
+                checkedDiag++;
+                xOrO += 4;
+                console.log("XORO++: ", xOrO);
+            }
+            console.log('WINNER check in major diagonal');
+            // determine if there was a winner in iterated major diagonal row
+            if(instanceOfXDiag === 3) { // if X wins
+                console.log("INSTANCE OF X WIN");
+                winner = 'X';
+            }else if(instanceOfODiag === 3) { // if O wins
+                console.log("INSTANCE OF O WIN");
+                winner = 'O';
+            }
+            console.log('!!!!!!!! Winner is: ', winner);
+        }
+        
+    }
+
+    
+
     // by minor diagonal
 
 
