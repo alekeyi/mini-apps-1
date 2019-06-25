@@ -1,27 +1,9 @@
-<!-- <!doctype html>
-
-<html lange="en">
-    <head>
-        <meta charset="utf-8">
-
-        <title>Challenge 2 Placeholder</title>
-        <meta name="description" content="Challenge 2 Placeholder">
-        <meta name="author" content="ME">
-
-    </head>
-
-    <body>
-        <script src=""
-
-    </body>
-</html> -->
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Challenge 2 Placeholder</title>
+    <title>Challenge 2 CSV Report Generator</title>
   </head>
 
   <body>
@@ -37,6 +19,7 @@
     </style>
 
     <iframe name="hiddenFrame" class="hide"></iframe>
+    <h1>Big Boy CSV Report Generator</h1>
     <form id="form" action="/submit" method="POST" target="hiddenFrame">
       Input that badboy:<br />
       <br />
@@ -51,7 +34,12 @@
       ></textarea>
       <br />
       <input type="submit" value="Submit" onclick="return clearForm();" />
-      <!-- <input type="submit" value="Submit"> -->
+      <button onclick="displaySalesReport()">Display Sales Report</button>
     </form>
+    <br />
+    <div id="salesReps" style="display:none;">
+      <br />
+      Epic
+    </div>
   </body>
 </html>
