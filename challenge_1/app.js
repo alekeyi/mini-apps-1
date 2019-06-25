@@ -10,6 +10,8 @@ button.addEventListener('click', event => {
     for(let i = 1; i < 10; i++) {
         document.getElementById(`square-${i}`).innerHTML = '';
     }
+    // clear result message
+    document.getElementById('result').innerHTML = '';
     // reset player order toggle 
     playerMark = true;
     // reset turns
