@@ -1,0 +1,31 @@
+{
+  "name": "challenge_2",
+  "version": "0.0.0",
+  "description": "Challenge 2 package",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alekeyi/hratx42-mini-apps-1.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "alekeyi <aleksey.ioseliani@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alekeyi/hratx42-mini-apps-1/issues"
+  },
+  "homepage": "https://github.com/alekeyi/hratx42-mini-apps-1#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

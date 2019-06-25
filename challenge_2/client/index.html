@@ -1,2 +1,42 @@
+<!-- <!doctype html>
 
+<html lange="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Challenge 2 Placeholder</title>
+        <meta name="description" content="Challenge 2 Placeholder">
+        <meta name="author" content="ME">
+
+    </head>
+
+    <body>
+        <script src=""
+
+    </body>
+</html> -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Challenge 2 Placeholder</title>
+</head>
+
+<body>
+    <script src="app.js"></script>
+    <style>
+        .hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+    </style>
+    
+    <iframe name="hiddenFrame" class="hide"></iframe>
+    <form id="form" action="/submit" method="post" target="hiddenFrame">Input that badboy:<br>
+        <br>
+        <textarea id="text-area" rows="6" cols="100" placeholder="Sales report" form="form" autofocus></textarea>
+        <br>
+        <input type="submit" value="Submit" onclick="return clearForm();" />
+    </form>
+</body>
+</html>
 
