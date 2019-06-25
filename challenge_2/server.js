@@ -30,8 +30,14 @@ app.post("/submit", (req, res) => {
   console.log("Post submit on the main page");
   // console.log("\nREQUEST HEADERS: \n", req.headers);
   // console.log("\nForm data in REQUEST BODY: \n", req.body);
-  let trimmedData = req.body.formData.replace(/\s+/g, ' ').trim();
-  serverArray.push(trimmedData);
+  console.log("\nreq.body.formData", req.body.formData);
+  console.log("req.body: ", req.body);
+  if(req.body.formData) {
+    let trimmedData = req.body.formData.replace(/\s+/g, ' ').trim();
+    serverArray.push(trimmedData);      
+  } else {
+    // serverArray.push(data);
+  }
 //   let postData = document.getElementById("salesReps");
 //   postData.innerHTML = serverArray;
   console.log("REQ.PARAMS: ", req.params);
