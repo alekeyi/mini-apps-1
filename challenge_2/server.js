@@ -47,7 +47,7 @@ app.post(
     // console.log("formData: ", formData);
     // res.send(formData);
     res.json(req.body.formData);
-    console.log('\nreq.body.formData', req.body.formData);
+    console.log("\nreq.body.formData", req.body.formData);
   }
 );
 
