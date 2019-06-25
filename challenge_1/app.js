@@ -1,5 +1,22 @@
 console.log("Is app.js loading into HTML???");
 
+// reset button
+const button = document.querySelector('button');
+
+// create an event listener for button click
+button.addEventListener('click', event => {
+    console.log('Reset!');
+    // iterate through entire board to reset all values
+    for(let i = 1; i < 10; i++) {
+        document.getElementById(`square-${i}`).innerHTML = '';
+    }
+    // reset player order toggle 
+    playerMark = true;
+    // reset turns
+    turns = 0;
+});
+
+
 // set a variable to be toggled in order to determine whose turn it is
 // NEVERMIND // set the variable to be random on page load
 // NEVERMIND // let playerMark = Math.random() >= 0.5;
@@ -58,7 +75,7 @@ document.getElementById("board").addEventListener("click", function(event) {
         }
         // conditional to check if anyone won after enough turns
         // console.log("TURN: ", turns);
-        if (turns > 3) {
+        if (turns > 4) {
             // console.log("TURN: ", turns);
             resultOfGame();
         }
@@ -116,7 +133,7 @@ let resultOfGame = function() {
     
     // inspect by column
     // iterate through each column, if there isn't already a winner
-    if(winner.length === 0 && tie === false) {
+    if(winner.length === 0) {
         for(let i = 1; i < 3; i++) {
             // iterate down each column
             for(let j = i; j < 3; j++) {
@@ -143,47 +160,29 @@ let resultOfGame = function() {
         }
     }
 
+    
     // inspect by diagonal
-    // by major diagonal 
+    // by major diagonal // use matrices for this
     if(winner.length === 0) {
-        console.log('Checking major diagonal...');
-        // iterate through columns
-        for(let i = 1 + checkedDiag; i < 4; i++) {
-            console.log("FIRST ITERATION RESET");
-            // iterate cells row, each row one further right, matching column number
-            console.log("XORO: ", xOrO);
-            for(let j = i; j <= i; j++){
-                console.log("SECOND ITERATION RESET");
-                // add up instances of X
-                console.log("COLUMN: ", i, "\nROW: ", j, "\nin turn: ", turns);
-                if(document.getElementById(`square-${xOrO}`).innerHTML.indexOf('X') > -1) {
+        // iterate through rows
+        for(let i = xOrO; i <= 7; i+=3) {
+            // one column in each row
+            for(let j = i + checkedDiag; j < i + 1; j++) {
+                console.log("ROW: ", i, "\nCOLUMN: ", j, "\nin turn: ", turns);
+                if(document.getElementById(`square-${j}`).innerHTML.indexOf('X') > -1) {
                     console.log("instanceOfXDiag++++++++++++++++++++");
                     instanceOfXDiag++;
-                    // checkedDiag++;
-                } else if(document.getElementById(`square-${xOrO}`).innerHTML.indexOf('O') > -1) {
+                } else if(document.getElementById(`square-${j}`).innerHTML.indexOf('O') > -1) {
                 // add up instances of O along column iteration
                     console.log("instanceOfODiag++++++++++++++++++++");
                     instanceOfODiag++;
-                    // checkedDiag++;
                 }
-                // keep track of iteration (checkedDiag) and which square we're looking at (xOrO)
-                checkedDiag++;
-                xOrO += 4;
-                console.log("XORO++: ", xOrO);
             }
-            console.log('WINNER check in major diagonal');
-            // determine if there was a winner in iterated major diagonal row
-            if(instanceOfXDiag === 3) { // if X wins
-                console.log("INSTANCE OF X WIN");
-                winner = 'X';
-            }else if(instanceOfODiag === 3) { // if O wins
-                console.log("INSTANCE OF O WIN");
-                winner = 'O';
-            }
-            console.log('!!!!!!!! Winner is: ', winner);
+            checkedDiag++;
+            xOrO++;
         }
-        
     }
+    
 
     
 
