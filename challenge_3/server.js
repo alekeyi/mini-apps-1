@@ -15,7 +15,10 @@ app.use(express.static("public"));
 
 // setup database connection to server, with callbacks
 app.get("/users", (req, res) => {
-  
+  db.allUsers((err, users) => {
+    console.log("Querying all users...");
+    res.send(users);
+  })
 })
 
 // setup listener

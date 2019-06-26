@@ -12,7 +12,7 @@ connection.connect(function(err) {
 // set a string to get all users
 let queryString = "SELECT * FROM users";
 
-const allUsers = db => {
+const allUsers = cb => {
   // this query gets all users
   connection.query(queryString, function(err, results, fields) {
     if (err) throw err;
