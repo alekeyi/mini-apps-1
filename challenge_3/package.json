@@ -1,0 +1,33 @@
+{
+  "name": "challenge_3",
+  "version": "0.0.0",
+  "description": "Multistep Checkout Experience",
+  "main": "server.js",
+  "scripts": {
+    "babel-version": "babel --version",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel client -d public --presets @babel/preset-react --souce-maps inline --watch",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alekeyi/hratx42-mini-apps-1.git"
+  },
+  "author": "alekeyi <aleksey.ioseliani@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alekeyi/hratx42-mini-apps-1/issues"
+  },
+  "homepage": "https://github.com/alekeyi/hratx42-mini-apps-1#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "dependencies": {}
+}
