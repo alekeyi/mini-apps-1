@@ -4,7 +4,8 @@ CREATE DATABASE usersdb;
 
 USE usersdb;
 
-CREATE TABLE users (
+CREATE TABLE users
+(
     id SERIAL,
     username VARCHAR(30)
 );
